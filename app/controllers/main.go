@@ -16,11 +16,11 @@ type MainController struct {
 	BaseController
 }
 
-// 首页
+// 首頁
 func (this *MainController) Index() {
-	this.Data["pageTitle"] = "系统概况"
+	this.Data["pageTitle"] = "系統概況"
 
-	// 即将执行的任务
+	// 即將執行的任務
 	entries := jobs.GetEntries(30)
 	jobList := make([]map[string]interface{}, len(entries))
 	for k, v := range entries {
@@ -32,7 +32,7 @@ func (this *MainController) Index() {
 		jobList[k] = row
 	}
 
-	// 最近执行的日志
+	// 最近執行的日誌
 	logs, _ := models.TaskLogGetList(1, 20)
 	recentLogs := make([]map[string]interface{}, len(logs))
 	for k, v := range logs {
@@ -52,7 +52,7 @@ func (this *MainController) Index() {
 		recentLogs[k] = row
 	}
 
-	// 最近执行失败的日志
+	// 最近執行失敗的日誌
 	logs, _ = models.TaskLogGetList(1, 20, "status__lt", 0)
 	errLogs := make([]map[string]interface{}, len(logs))
 	for k, v := range logs {
@@ -79,7 +79,7 @@ func (this *MainController) Index() {
 	this.display()
 }
 
-// 个人信息
+// 個人信息
 func (this *MainController) Profile() {
 	beego.ReadFromRequest(&this.Controller)
 	user, _ := models.UserGetById(this.userId)
@@ -115,7 +115,7 @@ func (this *MainController) Profile() {
 	this.display()
 }
 
-// 登录
+// 登錄
 func (this *MainController) Login() {
 	if this.userId > 0 {
 		this.redirect("/")
@@ -131,9 +131,9 @@ func (this *MainController) Login() {
 			user, err := models.UserGetByName(username)
 			errorMsg := ""
 			if err != nil || user.Password != libs.Md5([]byte(password+user.Salt)) {
-				errorMsg = "帐号或密码错误"
+				errorMsg = "帳號或密碼錯誤"
 			} else if user.Status == -1 {
-				errorMsg = "该帐号已禁用"
+				errorMsg = "該帳號已禁用"
 			} else {
 				user.LastIp = this.getClientIp()
 				user.LastLogin = time.Now().Unix()
@@ -157,13 +157,13 @@ func (this *MainController) Login() {
 	this.TplName = "main/login.html"
 }
 
-// 退出登录
+// 退出登錄
 func (this *MainController) Logout() {
 	this.Ctx.SetCookie("auth", "")
 	this.redirect(beego.URLFor("MainController.Login"))
 }
 
-// 获取系统时间
+// 獲取系統時間
 func (this *MainController) GetTime() {
 	out := make(map[string]interface{})
 	out["time"] = time.Now().UnixNano() / int64(time.Millisecond)

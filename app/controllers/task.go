@@ -15,7 +15,7 @@ type TaskController struct {
 	BaseController
 }
 
-// 任务列表
+// 任務列表
 func (this *TaskController) List() {
 	page, _ := this.GetInt("page")
 	if page < 1 {
@@ -59,10 +59,10 @@ func (this *TaskController) List() {
 		list[k] = row
 	}
 
-	// 分组列表
+	// 分組列表
 	groups, _ := models.TaskGroupGetList(1, 100)
 
-	this.Data["pageTitle"] = "任务列表"
+	this.Data["pageTitle"] = "任務列表"
 	this.Data["list"] = list
 	this.Data["groups"] = groups
 	this.Data["groupid"] = groupId
@@ -70,7 +70,7 @@ func (this *TaskController) List() {
 	this.display()
 }
 
-// 添加任务
+// 添加任務
 func (this *TaskController) Add() {
 
 	if this.isPost() {
@@ -92,7 +92,7 @@ func (this *TaskController) Add() {
 			for _, v := range tmp {
 				v = strings.TrimSpace(v)
 				if !libs.IsEmail([]byte(v)) {
-					this.ajaxMsg("无效的Email地址："+v, MSG_ERR)
+					this.ajaxMsg("無效的Email地址："+v, MSG_ERR)
 				} else {
 					emailList = append(emailList, v)
 				}
@@ -101,10 +101,10 @@ func (this *TaskController) Add() {
 		}
 
 		if task.TaskName == "" || task.CronSpec == "" || task.Command == "" {
-			this.ajaxMsg("请填写完整信息", MSG_ERR)
+			this.ajaxMsg("請填寫完整信息", MSG_ERR)
 		}
 		if _, err := libcron.Parse(task.CronSpec); err != nil {
-			this.ajaxMsg("cron表达式无效", MSG_ERR)
+			this.ajaxMsg("cron表達式無效", MSG_ERR)
 		}
 		if _, err := models.TaskAdd(task); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
@@ -116,7 +116,7 @@ func (this *TaskController) Add() {
 	// 分组列表
 	groups, _ := models.TaskGroupGetList(1, 100)
 	this.Data["groups"] = groups
-	this.Data["pageTitle"] = "添加任务"
+	this.Data["pageTitle"] = "添加任務"
 	this.display()
 }
 
@@ -146,7 +146,7 @@ func (this *TaskController) Edit() {
 			for _, v := range tmp {
 				v = strings.TrimSpace(v)
 				if !libs.IsEmail([]byte(v)) {
-					this.ajaxMsg("无效的Email地址："+v, MSG_ERR)
+					this.ajaxMsg("無效的Email地址："+v, MSG_ERR)
 				} else {
 					emailList = append(emailList, v)
 				}
@@ -155,10 +155,10 @@ func (this *TaskController) Edit() {
 		}
 
 		if task.TaskName == "" || task.CronSpec == "" || task.Command == "" {
-			this.ajaxMsg("请填写完整信息", MSG_ERR)
+			this.ajaxMsg("請填寫完整信息", MSG_ERR)
 		}
 		if _, err := libcron.Parse(task.CronSpec); err != nil {
-			this.ajaxMsg("cron表达式无效", MSG_ERR)
+			this.ajaxMsg("cron表達式無效", MSG_ERR)
 		}
 		if err := task.Update(); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
@@ -171,11 +171,11 @@ func (this *TaskController) Edit() {
 	groups, _ := models.TaskGroupGetList(1, 100)
 	this.Data["groups"] = groups
 	this.Data["task"] = task
-	this.Data["pageTitle"] = "编辑任务"
+	this.Data["pageTitle"] = "編輯任務"
 	this.display()
 }
 
-// 任务执行日志列表
+// 任務執行日誌列表
 func (this *TaskController) Logs() {
 	taskId, _ := this.GetInt("id")
 	page, _ := this.GetInt("page")
@@ -201,14 +201,14 @@ func (this *TaskController) Logs() {
 		list[k] = row
 	}
 
-	this.Data["pageTitle"] = "任务执行日志"
+	this.Data["pageTitle"] = "任務執行日誌"
 	this.Data["list"] = list
 	this.Data["task"] = task
 	this.Data["pageBar"] = libs.NewPager(page, int(count), this.pageSize, beego.URLFor("TaskController.Logs", "id", taskId), true).ToString()
 	this.display()
 }
 
-// 查看日志详情
+// 查看日誌詳情
 func (this *TaskController) ViewLog() {
 	id, _ := this.GetInt("id")
 
@@ -233,16 +233,16 @@ func (this *TaskController) ViewLog() {
 
 	this.Data["task"] = task
 	this.Data["data"] = data
-	this.Data["pageTitle"] = "查看日志"
+	this.Data["pageTitle"] = "查看日誌"
 	this.display()
 }
 
-// 批量操作日志
+// 批量操作日誌
 func (this *TaskController) LogBatch() {
 	action := this.GetString("action")
 	ids := this.GetStrings("ids")
 	if len(ids) < 1 {
-		this.ajaxMsg("请选择要操作的项目", MSG_ERR)
+		this.ajaxMsg("請選擇要操作的項目", MSG_ERR)
 	}
 	for _, v := range ids {
 		id, _ := strconv.Atoi(v)
@@ -263,7 +263,7 @@ func (this *TaskController) Batch() {
 	action := this.GetString("action")
 	ids := this.GetStrings("ids")
 	if len(ids) < 1 {
-		this.ajaxMsg("请选择要操作的项目", MSG_ERR)
+		this.ajaxMsg("請選擇要操作的項目", MSG_ERR)
 	}
 
 	for _, v := range ids {
@@ -297,7 +297,7 @@ func (this *TaskController) Batch() {
 	this.ajaxMsg("", MSG_OK)
 }
 
-// 启动任务
+// 啟動任務
 func (this *TaskController) Start() {
 	id, _ := this.GetInt("id")
 
@@ -323,7 +323,7 @@ func (this *TaskController) Start() {
 	this.redirect(refer)
 }
 
-// 暂停任务
+// 暫停任務
 func (this *TaskController) Pause() {
 	id, _ := this.GetInt("id")
 
@@ -343,7 +343,7 @@ func (this *TaskController) Pause() {
 	this.redirect(refer)
 }
 
-// 立即执行
+// 立即執行
 func (this *TaskController) Run() {
 	id, _ := this.GetInt("id")
 

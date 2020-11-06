@@ -62,7 +62,7 @@ func (this *GroupController) Edit() {
 		this.ajaxMsg("", MSG_OK)
 	}
 
-	this.Data["pageTitle"] = "编辑分组"
+	this.Data["pageTitle"] = "編輯分組"
 	this.Data["group"] = group
 	this.display()
 }
@@ -71,7 +71,7 @@ func (this *GroupController) Batch() {
 	action := this.GetString("action")
 	ids := this.GetStrings("ids")
 	if len(ids) < 1 {
-		this.ajaxMsg("请选择要操作的项目", MSG_ERR)
+		this.ajaxMsg("請選擇要操作的項目", MSG_ERR)
 	}
 
 	for _, v := range ids {

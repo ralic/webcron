@@ -39,7 +39,7 @@ func (this *BaseController) Prepare() {
 	this.Data["loginUserName"] = this.userName
 }
 
-//登录状态验证
+//登錄狀態驗證
 func (this *BaseController) auth() {
 	arr := strings.Split(this.Ctx.GetCookie("auth"), "|")
 	if len(arr) == 2 {
@@ -84,7 +84,7 @@ func (this *BaseController) isPost() bool {
 	return this.Ctx.Request.Method == "POST"
 }
 
-// 显示错误信息
+// 顯示錯誤信息
 func (this *BaseController) showMsg(args ...string) {
 	this.Data["message"] = args[0]
 	redirect := this.Ctx.Request.Referer()
@@ -99,7 +99,7 @@ func (this *BaseController) showMsg(args ...string) {
 	this.StopRun()
 }
 
-// 输出json
+// 輸出json
 func (this *BaseController) jsonResult(out interface{}) {
 	this.Data["json"] = out
 	this.ServeJSON()
@@ -114,7 +114,7 @@ func (this *BaseController) ajaxMsg(msg interface{}, msgno int) {
 	this.jsonResult(out)
 }
 
-//获取用户IP地址
+//獲取用戶IP地址
 func (this *BaseController) getClientIp() string {
 	s := strings.Split(this.Ctx.Request.RemoteAddr, ":")
 	return s[0]
